@@ -1,5 +1,5 @@
 const API_KEY = "d3571033306f8e443ead5ad19803b4b3";
-const API_URL = `https://www.themoviedb.org/movie/api_key=${API_KEY}`;
+const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
 
 export default async function fetchMovies() {
   try {
