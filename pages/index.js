@@ -1,7 +1,5 @@
-export default function HomePage() {
-  return (
-    <div>
-      <h1>Hello from Next.js</h1>
-    </div>
-  );
+import MoviesList from "@/components/MoviesList";
+
+export default function HomePage({ movies }) {
+  return <MoviesList movies={movies} />;
 }
