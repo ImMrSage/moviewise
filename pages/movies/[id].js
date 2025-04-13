@@ -1,24 +1,33 @@
-import fetchMovieById from "../api/getMovieById";
+import fetchMovieById from "../../lib/fetchMovieById";
 import Movie from "@/components/Movie";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function MovieDetail() {
   const router = useRouter();
-  const id = router.query / id;
 
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
+    console.log("router.isReady:", router.isReady);
+    console.log("router.query.id:", router.query.id);
+
+    if (!router.isReady) return;
+
+    const id = router.query.id; // destructure id from router.query
+
+    if (!id) return; // safety check
+
     async function getMovie() {
       const movie = await fetchMovieById(id);
       setMovie(movie);
       setLoading(false);
     }
+
     getMovie();
-  }, [id]);
+  }, [router.isReady, router.query.id]);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -26,5 +35,10 @@ export default function MovieDetail() {
     return <div>No movie found</div>;
   }
 
-  return <Movie movie={movie} priority />;
+  return (
+    <>
+      <Link href="/">← Back to Movies</Link>
+      <Movie movie={movie} priority />
+    </>
+  );
 }
