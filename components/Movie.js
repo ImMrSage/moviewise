@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Movie({ movie, priority, id }) {
+export default function Movie({ movie, priority }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
   return (
