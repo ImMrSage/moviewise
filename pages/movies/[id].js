@@ -38,7 +38,7 @@ export default function MovieDetail() {
   return (
     <>
       <Link href="/">← Back to Movies</Link>
-      <Movie movie={movie} priority />
+      <Movie movie={movie} priority showDetails />
     </>
   );
 }

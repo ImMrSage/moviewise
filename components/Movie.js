@@ -1,12 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import formatDuration from "@/lib/formatDuration";
 
-export default function Movie({ movie, priority }) {
+export default function Movie({ movie, priority, showDetails = false }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
   return (
     <li key={movie.id}>
       <h2>{movie.title}</h2>
+      <p>Release Date: {movie.release_date}</p>
+      {showDetails && (
+        <>
+          <p>
+            Genre: |{" "}
+            {movie.genres?.map((genre) => `${genre.name} | `) || "Unknown"}
+          </p>
+          <p>Duration: {formatDuration(movie.runtime)}</p>
+        </>
+      )}
       <p>Rating: {movie.vote_average}</p>
       {movie.poster_path && (
         <Link href={`/movies/${movie.id}`}>
@@ -19,7 +30,12 @@ export default function Movie({ movie, priority }) {
           />
         </Link>
       )}
-      <p>Release Date: {movie.release_date}</p>
+      {showDetails && (
+        <>
+          <p>{movie.overview}</p>
+          <p>Directed by {movie.director}</p>
+        </>
+      )}
     </li>
   );
 }
