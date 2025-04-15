@@ -1,6 +1,6 @@
 import GlobalStyle from "../styles";
 import { useEffect, useState } from "react";
-import fetchMovies from "./api";
+import fetchMovies from "../lib/fetchMovies";
 
 export default function App({ Component, pageProps }) {
   const [movies, setMovies] = useState([]);
