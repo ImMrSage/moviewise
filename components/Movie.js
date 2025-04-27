@@ -2,8 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import formatDuration from "@/lib/formatDuration";
 
-export default function Movie({ movie, priority, showDetails = false }) {
+export default function Movie({
+  movie,
+  favorites,
+  setFavorites,
+  priority,
+  showDetails = false,
+}) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+
+  console.log("Favorites:", favorites);
+
+  const isFavorite =
+    Array.isArray && favorites.some((fav) => fav.id === movie.id);
+
+  function toggleFavorite() {
+    if (isFavorite) {
+      setFavorites(favorites.filter((fav) => fav.id !== movie.id));
+    } else {
+      setFavorites([...favorites, movie]);
+    }
+  }
 
   return (
     <li key={movie.id}>
@@ -30,6 +49,9 @@ export default function Movie({ movie, priority, showDetails = false }) {
           />
         </Link>
       )}
+      <button type="button" onClick={toggleFavorite}>
+        {isFavorite ? "💔" : "❤️"}
+      </button>
       {showDetails && (
         <>
           <p>{movie.overview}</p>

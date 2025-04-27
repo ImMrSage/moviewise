@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function MovieDetail() {
+export default function MovieDetail({ favorites, setFavorites }) {
   const router = useRouter();
 
   const [movie, setMovie] = useState(null);
@@ -38,7 +38,13 @@ export default function MovieDetail() {
   return (
     <>
       <Link href="/">← Back to Movies</Link>
-      <Movie movie={movie} priority showDetails />
+      <Movie
+        movie={movie}
+        favorites={favorites}
+        setFavorites={setFavorites}
+        priority
+        showDetails
+      />
     </>
   );
 }

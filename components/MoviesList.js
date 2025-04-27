@@ -1,6 +1,6 @@
 import Movie from "./Movie";
 
-export default function MoviesList({ movies }) {
+export default function MoviesList({ movies, favorites, setFavorites }) {
   if (!movies) {
     return <p>Loading...</p>;
   }
@@ -10,7 +10,13 @@ export default function MoviesList({ movies }) {
   return (
     <ul>
       {movies.map((movie, index) => (
-        <Movie key={movie.id} movie={movie} priority={index === 0} />
+        <Movie
+          key={movie.id}
+          movie={movie}
+          favorites={favorites}
+          setFavorites={setFavorites}
+          priority={index === 0}
+        />
       ))}
     </ul>
   );
