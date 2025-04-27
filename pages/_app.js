@@ -1,10 +1,12 @@
 import GlobalStyle from "../styles";
 import { useEffect, useState } from "react";
 import fetchMovies from "../lib/fetchMovies";
+import useLocalStorage from "use-local-storage";
 
 export default function App({ Component, pageProps }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useLocalStorage("favorites", []);
 
   useEffect(() => {
     async function getMovies() {
@@ -24,7 +26,12 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Component {...pageProps} movies={movies} />
+      <Component
+        {...pageProps}
+        movies={movies}
+        favorites={favorites}
+        setFavorites={setFavorites}
+      />
     </>
   );
 }
