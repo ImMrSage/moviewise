@@ -37,7 +37,6 @@ export default function MovieDetail({ favorites, setFavorites }) {
 
   return (
     <>
-      <Link href="/">← Back to Movies</Link>
       <Movie
         movie={movie}
         favorites={favorites}
