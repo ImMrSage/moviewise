@@ -11,8 +11,6 @@ export default function Movie({
 }) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
-  console.log("Favorites:", favorites);
-
   const isFavorite =
     Array.isArray && favorites.some((fav) => fav.id === movie.id);
 

@@ -8,6 +8,8 @@ export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useLocalStorage("favorites", []);
 
+  console.log("Favorites:", favorites);
+
   useEffect(() => {
     async function getMovies() {
       const movies = await fetchMovies();
