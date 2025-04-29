@@ -1,9 +1,9 @@
 import MoviesList from "@/components/MoviesList";
 
-export default function HomePage({ movies, favorites, setFavorites }) {
+export default function Favorites({ favorites, setFavorites }) {
   return (
     <MoviesList
-      movies={movies}
+      movies={favorites}
       favorites={favorites}
       setFavorites={setFavorites}
     />
