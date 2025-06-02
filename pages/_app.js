@@ -1,5 +1,6 @@
 import GlobalStyle from "../styles";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import fetchMovies from "../lib/fetchMovies";
 import useLocalStorage from "use-local-storage";
 import Link from "next/link";
@@ -8,17 +9,18 @@ export default function App({ Component, pageProps }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useLocalStorage("favorites", []);
+  const page = parseInt(useRouter().query.page) || 1;
 
   console.log("Favorites:", favorites);
 
   useEffect(() => {
     async function getMovies() {
-      const movies = await fetchMovies();
+      const movies = await fetchMovies(page);
       setMovies(movies);
       setLoading(false);
     }
     getMovies();
-  }, []);
+  }, [page]);
   if (loading) {
     return <div>Loading...</div>;
   }
