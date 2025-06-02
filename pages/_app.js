@@ -39,6 +39,7 @@ export default function App({ Component, pageProps }) {
         movies={movies}
         favorites={favorites}
         setFavorites={setFavorites}
+        page={page}
       />
     </>
   );
