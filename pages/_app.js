@@ -7,20 +7,21 @@ import Link from "next/link";
 
 export default function App({ Component, pageProps }) {
   const [movies, setMovies] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useLocalStorage("favorites", []);
   const page = parseInt(useRouter().query.page) || 1;
 
-  console.log("Favorites:", favorites);
-
   useEffect(() => {
     async function getMovies() {
-      const movies = await fetchMovies(page);
+      const { movies, totalPages } = await fetchMovies(page);
       setMovies(movies);
+      setTotalPages(totalPages);
       setLoading(false);
     }
     getMovies();
   }, [page]);
+  console.log("Total Pages: ", totalPages);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }) {
         favorites={favorites}
         setFavorites={setFavorites}
         page={page}
+        totalPages={totalPages}
       />
     </>
   );

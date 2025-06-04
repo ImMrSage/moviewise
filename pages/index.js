@@ -1,8 +1,17 @@
 import MoviesList from "@/components/MoviesList";
-import { useRouter } from "next/router";
+import Pagination from "@/components/Pagination";
 
-export default function HomePage({ movies, favorites, setFavorites, page }) {
-  const router = useRouter();
+export default function HomePage({
+  movies,
+  favorites,
+  setFavorites,
+  page,
+  totalPages,
+}) {
+  if (page > 500) {
+    return <p>Only the first 500 pages are accessible.</p>;
+  }
+
   return (
     <>
       <MoviesList
@@ -10,13 +19,7 @@ export default function HomePage({ movies, favorites, setFavorites, page }) {
         favorites={favorites}
         setFavorites={setFavorites}
       />
-      <button
-        onClick={() => router.push(`/?page=${page - 1}`)}
-        disabled={page === 1}
-      >
-        ⬅️
-      </button>
-      <button onClick={() => router.push(`/?page=${page + 1}`)}>➡️</button>
+      <Pagination page={page} totalPages={totalPages} />
     </>
   );
 }
