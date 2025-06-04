@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 export default function Pagination({ page, totalPages }) {
   const router = useRouter();
-  const currentPageInt = parseInt(page, 10);
+  const currentPageInt = parseInt(page || "1", 10);
   function createPageRange() {
     const pageRadius = 2;
     const range = [];
@@ -11,7 +11,11 @@ export default function Pagination({ page, totalPages }) {
     const end = Math.min(totalPages - 1, currentPageInt + pageRadius);
 
     if (start > 2) range.push("start-ellipsis");
-    for (let i = start; i <= end; i++) range.push(i);
+    for (let i = start; i <= end; i++)
+      if (!range.includes(i)) {
+        range.push(i);
+      }
+
     if (end < totalPages - 1) range.push("end-ellipsis");
 
     return range;
@@ -32,22 +36,36 @@ export default function Pagination({ page, totalPages }) {
         ◀ Prev
       </button>
 
-      <button onClick={() => goToPage(1)}>1</button>
+      <button
+        onClick={() => goToPage(1)}
+        style={{ fontWeight: currentPageInt === 1 ? "bold" : "normal" }}
+      >
+        1
+      </button>
 
       {pageRange.map((num, idx) => {
         if (num === "start-ellipsis" || num === "end-ellipsis") {
-          return <span key={idx}>...</span>;
+          return <span key={`ellipsis-${idx}`}>...</span>;
         }
         return (
-          <button key={num} onClick={() => goToPage(num)}>
+          <button
+            key={`page-${num}`}
+            onClick={() => goToPage(num)}
+            style={{ fontWeight: currentPageInt === num ? "bold" : "normal" }}
+          >
             {num}
           </button>
         );
       })}
 
-      {totalPages > 1 && (
-        <button onClick={() => goToPage(totalPages)}>{totalPages}</button>
-      )}
+      <button
+        onClick={() => goToPage(totalPages)}
+        style={{
+          fontWeight: currentPageInt === totalPages ? "bold" : "normal",
+        }}
+      >
+        {totalPages}
+      </button>
 
       <button
         onClick={() => goToPage(currentPageInt + 1)}
